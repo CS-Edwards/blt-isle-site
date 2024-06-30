@@ -52,20 +52,23 @@ x-secrets-jwt-public: &secrets-jwt-public
 networks:
     default:
 
-volumes:
-    activemq-data: {}
-    blazegraph-data: {}
-    cantaloupe-data: {}
-    code-server-data: {}
-    drupal-private-files: {}
-    drupal-public-files: {}
-    drupal-root: {}
-    drupal-solr-config: {}
-    fcrepo-data: {}
-    jetbrains-cache: {}
-    jetbrains-config: {}
-    mariadb-data: {}
-    solr-data: {}
+
+
+#volumes:
+  # Using AWS EBS volumes attached to EC2 instance
+#    activemq-data: {}
+#    blazegraph-data: {}
+#    cantaloupe-data: {}
+#    code-server-data: {}
+#    drupal-private-files: {}
+#    drupal-public-files: {}
+#    drupal-root: {}
+#    drupal-solr-config: {}
+#    fcrepo-data: {}
+#    jetbrains-cache: {}
+#    jetbrains-config: {}
+#    mariadb-data: {}
+#    solr-data: {}
 
 secrets:
     # Certificates are only used for development environments.
@@ -216,7 +219,7 @@ services:
             traefik.http.services.activemq.loadbalancer.server.port: 8161
             traefik.subdomain: activemq
         volumes:
-            - activemq-data:/opt/activemq/data:Z,rw
+            - /mnt/xvdbm:/data:Z,rw
         networks:
             default:
                 aliases: # Allow access without using the `-dev` or `-prod` suffix.
@@ -245,7 +248,7 @@ services:
             traefik.http.routers.blazegraph_https.tls: true
             traefik.http.services.blazegraph.loadbalancer.server.port: 8080
         volumes:
-            - blazegraph-data:/data:Z,rw
+            - /mnt/xvdbn:/data:Z,rw
         networks:
             default:
                 aliases: # Allow access without using the `-dev` or `-prod` suffix.
@@ -275,7 +278,7 @@ services:
             traefik.http.routers.cantaloupe_https.tls: true
             traefik.http.services.cantaloupe.loadbalancer.server.port: 8182
         volumes:
-            - cantaloupe-data:/data:Z,rw
+            - /mnt/xvdbo:/data:Z,rw
         networks:
             default:
                 aliases: # Allow access without using the `-dev` or `-prod` suffix.
@@ -487,7 +490,7 @@ services:
             traefik.http.routers.fcrepo_https.tls: true
             traefik.http.services.fcrepo.loadbalancer.server.port: 8080
         volumes:
-            - fcrepo-data:/data:Z,rw
+            - /mnt/xvdbp:/data:Z,rw
         networks:
             default:
                 aliases: # Allow access without using the `-dev` or `-prod` suffix.
@@ -527,7 +530,7 @@ services:
             traefik.http.routers.solr_https.tls: true
             traefik.http.services.solr.loadbalancer.server.port: 8983
         volumes:
-            - solr-data:/data:Z,rw
+            - /mnt/xvdbq:/data:Z,rw
             - type: volume
               source: drupal-solr-config
               target: /opt/solr/server/solr/default
