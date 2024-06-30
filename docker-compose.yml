@@ -1,3 +1,4 @@
+
 ---
 version: "3.8"
 
@@ -54,19 +55,19 @@ networks:
 
 
 
-#volumes:
+volumes:
   # Using AWS EBS volumes attached to EC2 instance
 #    activemq-data: {}
 #    blazegraph-data: {}
 #    cantaloupe-data: {}
-#    code-server-data: {}
-#    drupal-private-files: {}
-#    drupal-public-files: {}
-#    drupal-root: {}
-#    drupal-solr-config: {}
+    code-server-data: {}
+    drupal-private-files: {}
+    drupal-public-files: {}
+    drupal-root: {}
+    drupal-solr-config: {}
 #    fcrepo-data: {}
-#    jetbrains-cache: {}
-#    jetbrains-config: {}
+    jetbrains-cache: {}
+    jetbrains-config: {}
 #    mariadb-data: {}
 #    solr-data: {}
 
@@ -183,7 +184,7 @@ services:
         <<: [*dev, *common]
         image: ${ISLANDORA_REPOSITORY}/mariadb:${ISLANDORA_TAG}
         volumes:
-            - mariadb-data:/var/lib/mysql:Z,rw
+            - /mnt/xvdbr:/var/lib/mysql:Z,rw
         networks:
             default:
                 aliases: # Allow access without using the `-dev` or `-prod` suffix.
